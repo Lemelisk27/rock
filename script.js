@@ -1,53 +1,45 @@
-// var selection = prompt("Do you select Rock, Paper, or Scissors?")
-var selection = "r"
-var comp = ["Rock", "Paper", "Scissors"];
-// var ran = Math.floor(Math.random() * 3);
-var ran = 2;
-var compselection = comp[ran];
-var comptrim = compselection.charAt(0);
+// Set the starting score
 var win = 0;
 var lose = 0;
 var tie = 0;
 
-if ((selection != null) && selection != "") {
+// The game
+function game () {
+    var selection = prompt("Do you select Rock, Paper, or Scissors?");
+
+    var comp = ["Rock", "Paper", "Scissors"];
+    var ran = Math.floor(Math.random() * 3);
+    var compselection = comp[ran];
+    var comptrim = compselection.charAt(0);
+
+    if (selection != null && selection != "") {
         var selection = selection.charAt(0);
         var selection = selection.toUpperCase();
-}
+    }
 
-if (selection == "R") {
-    var player = "Rock"
-}
-else if (selection == "P") {
-    var player = "Paper"
-}
-else if (selection == "S") {
-    var player = "Scissors"
-}
-else {
-    var player = null
-}
+    if (selection == "R") {
+        var player = "Rock";
+    }
+    else if (selection == "P") {
+        var player = "Paper";
+    }
+    else if (selection == "S") {
+        var player = "Scissors"
+    }
+    else {
+        var player = null;
+        selection = null;
+    }
 
-function no () {
-    lose++
-    console.log(lost)
-}
-
-function yes () {
-    win++
-    console.log(won)
-}
-var tied = "It's a tie! You selected " + player + " and the computer selected " + compselection + "!\nWin: " + win + "\nLose: " + lose + "\nTied: " + tie
-var lost = "You lost! The computer selected " + compselection + ", and " + compselection + " beats " + player + "!\nWin: " + win + "\nLose: " + lose + "\nTied: " + tie
-var won = "You won! the computer selected " + compselection + ", and " + player + " beats " + compselection + "!\nWin: " + win + "\nLose: " + lose + "\nTied: " + tie
-
-function game () {
-    if ((selection == "") || (selection == null)) {
-        console.log("Make a selection");
+    if (selection == "" || selection == null) {
+        var newGame = confirm("Please enter Rock, Paper, or Scissors");
+        if (newGame == true) {
+            game()
+        }
         return;
     }
-    else if (selection === comptrim) {
-        tie++
-        console.log(tied)
+    else if (selection == comptrim) {
+        same()
     }
     else if (selection == "R") {
         if (comptrim == "P") {
@@ -59,26 +51,50 @@ function game () {
     }
     else if (selection == "P") {
         if (comptrim == "R") {
-            win++
-            console.log("You won! The computer selected " + compselection + ", and " + player + " covers " + compselection + "!")
+            yes()
         }
         else {
-            lose++
-            console.log("You lost! The computer selected " + compselection + ", and " + compselection + " cut " + player + "!")
+            no()
         }
     }
     else if (selection == "S") {
         if (comptrim == "P") {
-            win++
-            console.log("You won! The computer selected " + compselection + ", and " + player + " cut " + compselection + "!")
+            yes()
         }
         else {
-            lose++
-            console.log("You lost! The computer selected " + compselection + ", and " + compselection + " smashes " + player + "!")
+            no()
         }
     }
     else {
-        console.log("Invalid")
+        console.log("Break");
+        return;
+    }
+
+    function no () {
+        lose++
+        var lost = "You lost! The computer selected " + compselection + ", and " + compselection + " beats " + player + "!\nWin: " + win + "\nLose: " + lose + "\nTied: " + tie + "\nWould you like to play again?"
+        var newGame = confirm(lost)
+        if (newGame == true) {
+            game()
+        }
+    }
+    
+    function yes () {
+        win++
+        var won = "You won! the computer selected " + compselection + ", and " + player + " beats " + compselection + "!\nWin: " + win + "\nLose: " + lose + "\nTied: " + tie + "\nWould you like to play again?"
+        var newGame = confirm(won)
+        if (newGame == true) {
+            game()
+        }
+    }
+    
+    function same () {
+        tie++
+        var tied = "It's a tie! You selected " + player + " and the computer selected " + compselection + "!\nWin: " + win + "\nLose: " + lose + "\nTied: " + tie + "\nWould you like to play again?"
+        var newGame = confirm(tied)
+        if (newGame == true) {
+            game()
+        }
     }
 }
 
